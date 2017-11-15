@@ -50,7 +50,10 @@ func TestExtractTld(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		answer := ExtractTld(tc.domain)
+		answer, err := ExtractTld(tc.domain)
+		if err != nil {
+
+		}
 		assert.Equal(t, tc.expect, answer)
 	}
 }
@@ -74,7 +77,10 @@ func TestIsValidTld(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		answer := IsValidTld(tc.tld)
+		answer, err := IsValidTld(tc.tld)
+		if err != nil {
+
+		}
 		assert.Equal(t, tc.expect, answer)
 	}
 }
