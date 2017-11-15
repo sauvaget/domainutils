@@ -2,7 +2,6 @@ package domainutils
 
 import (
 	"errors"
-
 	"github.com/dlclark/regexp2"
 )
 
