@@ -23,7 +23,8 @@ func TestIsValid(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		answer, err := IsValid(tc.domain)
+		d := New(tc.domain)
+		answer, err := d.IsValid()
 		if err != nil {
 
 		}
@@ -49,7 +50,35 @@ func TestExtractTld(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		answer, err := ExtractTld(tc.domain)
+		d := New(tc.domain)
+		answer, err := d.ExtractTld()
+		if err != nil {
+
+		}
+		assert.Equal(t, tc.expect, answer)
+	}
+}
+
+func TestHasValidTld(t *testing.T) {
+	testCases := []struct {
+		domain string
+		expect bool
+	}{
+		{"google.com", true},
+		{"google.de", true},
+		{"google.ca", true},
+		{"google.co.uk", true},
+		{"google.de/", false},
+		{"google.dedsl", false},
+		{"google", true},
+		{"google.", false},
+		{"http://google.de", true},
+		{"8.8.8.8", false},
+	}
+
+	for _, tc := range testCases {
+		d := New(tc.domain)
+		answer, err := d.HasValidTld()
 		if err != nil {
 
 		}
@@ -76,7 +105,8 @@ func TestIsValidTld(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		answer, err := IsValidTld(tc.tld)
+		d := New("")
+		answer, err := d.IsValidTld(tc.tld)
 		if err != nil {
 
 		}
