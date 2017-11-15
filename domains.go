@@ -1,28 +1,29 @@
 package domainutils
 
 import (
+	"errors"
 	"log"
 
 	"github.com/dlclark/regexp2"
 )
 
 // IsValid checks if a given string fits a domain schemata
-func IsValid(domain string) bool {
+func IsValid(domain string) (bool, error) {
 	r, err := regexp2.Compile(`^((?!-))(xn--)?[a-z0-9][a-z0-9-_]{0,61}[a-z0-9]{0,1}\.(xn--)?([a-z0-9\-]{1,61}|[a-z0-9-]{1,30}\.[a-z]{2,})$`, 0)
 	if err != nil {
-		log.Printf("%s\n", err)
+		return false, err
 	}
 	match, err := r.MatchString(domain)
 	if err != nil {
-		log.Printf("%s\n", err)
+		return false, err
 	}
 	if !match {
-		return false
+		return false, errors.New("Domain doesn't match schemata")
 	}
 	if !IsValidTld(ExtractTld(domain)) {
-		return false
+		return false, errors.New("Domain doesn't have acceptable TLD")
 	}
-	return true
+	return true, nil
 }
 
 // ExtractTld return the top level domain from a domain

@@ -24,7 +24,10 @@ func TestIsValid(t *testing.T) {
 	}
 
 	for _, tc := range testCases {
-		answer := IsValid(tc.domain)
+		answer, err := IsValid(tc.domain)
+		if err != nil {
+
+		}
 		assert.Equal(t, tc.expect, answer)
 	}
 }
