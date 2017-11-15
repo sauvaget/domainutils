@@ -5,6 +5,11 @@ import (
 	"testing"
 )
 
+func TestNew(t *testing.T) {
+	d := New("domain.com")
+	assert.NotNil(t, d)
+}
+
 func TestIsValid(t *testing.T) {
 	testCases := []struct {
 		domain string
